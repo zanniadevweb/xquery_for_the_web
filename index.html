@@ -6,10 +6,19 @@
     <meta charset="UTF-8"/>
     <script type="text/javascript" src="mxqueryjs/mxqueryjs.nocache.js"></script>
     <script type="application/xquery">
-      b:alert(
-        let $x := <a><b>2</b><c>4</c></a>
-        return xs:string($x/b * $x/c)
-      )
+       b:alert("Hello World")
+			 for $book in doc("catalog.xml")/books/book
+			   let $title := $book/title/text()
+			   let $price := $book/price/text()
+			   where xs:decimal($price) gt 50.00
+			   order by $title
+				 b:alert({$title})
+				 b:alert({$price})
+			   return
+			      <book>
+			         <title>{$title}</title>
+			         <price>{$price}</price>
+			      </book>
     </script>
   </head>
   <body>
