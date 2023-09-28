@@ -6,7 +6,10 @@
     <meta charset="UTF-8"/>
     <script type="text/javascript" src="mxqueryjs/mxqueryjs.nocache.js"></script>
     <script type="application/xquery">
-       b:alert("Hello World")
+      b:alert(
+        let $x := <a><b>2</b><c>4</c></a>
+        return xs:string($x/b * $x/c)
+      )
     </script>
   </head>
   <body>
