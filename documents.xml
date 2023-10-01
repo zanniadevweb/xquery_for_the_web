@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<documents>
+   <headers>id, status, title, uri, provenance, provenanceAltNames, provenanceUri, provenanceCoordinates, provinceName, provinceUri, datingNotBefore, datingNotAfter, tmNo, edition, otherId, keywords</headers>
+   <document>
+      <id>apcd1</id>
+      <status>null</status>
+      <title>Sarcophagus of the imperial freedman M. Aur. Victorinus</title>
+      <uri>https://patrimonium.huma-num.fr/documents/apcd1</uri>
+      <provenance>Prymnessos</provenance>
+      <provenancealtnames>Prymnessus Sülün</provenancealtnames>
+      <provenanceuri>https://patrimonium.huma-num.fr/places/16061</provenanceuri>
+      <provenancecoordinates>[30.568578, 38.696915]</provenancecoordinates>
+      <province>Asia</province>
+      <provinceuri>https://patrimonium.huma-num.fr/places/2275</provinceuri>
+      <datingnotbefore>176</datingnotbefore>
+      <datingnotafter>225</datingnotafter>
+      <tmno>null</tmno>
+      <edition>class=labelInTable label label-primary&gt; MAMA XI 176   class=labelInTable label label-primary&gt; AE 1973, 533</edition>
+      <otherid>http%3A%2F%2Fmama.csad.ox.ac.uk%2Fmonuments%2FMAMA-XI-176.html</otherid>
+      <keywords>class=label label-primary labelInTable&gt;Funerary monuments class=label label-primary labelInTable&gt;Landed estate class=label label-primary labelInTable&gt;Tabularius</keywords>
+   </document>
+   <document>
+      <id>apcd2</id>
+      <status>null</status>
+      <title>Altar for Apollo dedicated by the imperial slave Eutyches</title>
+      <uri>https://patrimonium.huma-num.fr/documents/apcd2</uri>
+      <provenance>Malos</provenance>
+      <provenancealtnames>Μάλος - δῆμος Μαληνῶν   Gökçeyayla, formerly Orhaniye or Kilise</provenancealtnames>
+      <provenanceuri>https://patrimonium.huma-num.fr/places/52644</provenanceuri>
+      <provenancecoordinates>[30.7667, 39.0883]</provenancecoordinates>
+      <province>Asia</province>
+      <provinceuri>https://patrimonium.huma-num.fr/places/2275</provinceuri>
+      <datingnotbefore>161</datingnotbefore>
+      <datingnotafter>268</datingnotafter>
+      <tmno>null</tmno>
+      <edition>class=labelInTable label label-primary&gt; Haspels, Highlands 51</edition>
+      <otherid>https%3A%2F%2Fepigraphy.packhum.org%2Ftext%2F271508</otherid>
+      <keywords>class=label label-primary labelInTable&gt;Landed estate class=label label-primary labelInTable&gt;Sacred dedications</keywords>
+   </document>
+   <document>
+      <id>apcd3</id>
+      <status>null</status>
+      <title>Regulations concerning a temple in Arhilloi</title>
+      <uri>https://patrimonium.huma-num.fr/documents/apcd3</uri>
+      <provenance>Asartepe</provenance>
+      <provenancealtnames>Περίκομμα? Τμῶλος  Asartepe, north of Urganlı</provenancealtnames>
+      <provenanceuri>https://patrimonium.huma-num.fr/places/43326</provenanceuri>
+      <provenancecoordinates>[27.844933, 38.555483]</provenancecoordinates>
+      <province>Asia</province>
+      <provinceuri>https://patrimonium.huma-num.fr/places/2275</provinceuri>
+      <datingnotbefore>101</datingnotbefore>
+      <datingnotafter>300</datingnotafter>
+      <tmno>null</tmno>
+      <edition>class=labelInTable label label-primary&gt; IGR IV 1349</edition>
+      <otherid>null</otherid>
+      <keywords>class=label label-primary labelInTable&gt;Landed estate class=label label-primary labelInTable&gt;Officinator class=label label-primary labelInTable&gt;Sacred laws class=label label-primary labelInTable&gt;Vilicus</keywords>
+   </document>
+   <document>
+      <id>apcd4</id>
+      <status>null</status>
+      <title>Funerary stele for the foster parents of the imperial slave Ateimetos</title>
+      <uri>https://patrimonium.huma-num.fr/documents/apcd4</uri>
+      <provenance>Kışla</provenance>
+      <provenancealtnames>Kışla</provenancealtnames>
+      <provenanceuri>https://patrimonium.huma-num.fr/places/34334</provenanceuri>
+      <provenancecoordinates>[29.1958, 38.4722]</provenancecoordinates>
+      <province>Asia</province>
+      <provinceuri>https://patrimonium.huma-num.fr/places/2275</provinceuri>
+      <datingnotbefore>201</datingnotbefore>
+      <datingnotafter>300</datingnotafter>
+      <tmno>null</tmno>
+      <edition>class=labelInTable label label-primary&gt; Filges, Blaundos 35</edition>
+      <otherid>https%3A%2F%2Fepigraphy.packhum.org%2Ftext%2F348983</otherid>
+      <keywords>class=label label-primary labelInTable&gt;Dispensator class=label label-primary labelInTable&gt;Foster documentren class=label label-primary labelInTable&gt;Funerary monuments class=label label-primary labelInTable&gt;Landed estate</keywords>
+   </document>
+   <document>
+      <id>apcd5</id>
+      <status>null</status>
+      <title>Rescript of Septimius Severus and Caracalla to the coloni of Tymium</title>
+      <uri>https://patrimonium.huma-num.fr/documents/apcd5</uri>
+      <provenance>Saraycik</provenance>
+      <provenancealtnames>area locally known as Saraycik, near Susuzören</provenancealtnames>
+      <provenanceuri>https://patrimonium.huma-num.fr/places/52671</provenanceuri>
+      <provenancecoordinates>[29.46145967, 38.51617643]</provenancecoordinates>
+      <province>Asia</province>
+      <provinceuri>https://patrimonium.huma-num.fr/places/2275</provinceuri>
+      <datingnotbefore>205</datingnotbefore>
+      <datingnotafter>208</datingnotafter>
+      <tmno>null</tmno>
+      <edition>class=labelInTable label label-primary&gt; AE 2003, 1690   class=labelInTable label label-primary&gt; SEG 53, 1517   class=labelInTable label label-primary&gt; SEG 60, 1447</edition>
+      <otherid>http%3A%2F%2Fedh-www.adw.uni-heidelberg.de%2Fedh%2Finschrift%2FHD045164 http%3A%2F%2Fdx.doi.org%2F10.1163%2F1874-6772_seg_a60_1447 http%3A%2F%2Fdx.doi.org%2F10.1163%2F1874-6772_seg_a53_1517</otherid>
+      <keywords>class=label label-primary labelInTable&gt;Coloni class=label label-primary labelInTable&gt;Extortions by Roman officials class=label label-primary labelInTable&gt;Imperial rescripts class=label label-primary labelInTable&gt;Landed estate class=label label-primary labelInTable&gt;Petitions class=label label-primary labelInTable&gt;Proconsul class=label label-primary labelInTable&gt;Procurator class=label label-primary labelInTable&gt;Roman army class=label label-primary labelInTable&gt;Rural communities</keywords>
+   </document>
+</documents>
