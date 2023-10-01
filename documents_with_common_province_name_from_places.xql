@@ -13,6 +13,8 @@ declare function local:documents_with_common_province_name_from_places() {
        let $provinceName := $docProvince
        let $i := 0
        let $count := $i + 1
+       group by $docId
+       order by $docId
 
         return
             if($count = 6) then (: $count = 1 :)
