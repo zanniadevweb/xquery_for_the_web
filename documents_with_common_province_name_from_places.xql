@@ -12,26 +12,39 @@ declare function local:documents_with_common_province_name_from_places() {
        where $placeProvince = $docProvince
        let $provinceName := $docProvince
        let $i := 0
-       let $count := $i + 1
        group by $docId
        order by $docId
 
         return
-            if($count = 6) then (: $count = 1 :)
-                'break;first IF'
-            else(
-                if(contains($provinceName, 'Asia')) then
-                    <document>
-                     <it>{$count}</it>
-                     <docId>{$docId}</docId>
-                     <docTitle>{$docTitle}</docTitle>
-                     <placeName>{$placeName}</placeName>
-                     <provinceName>{$provinceName}</provinceName>
-                    </document>
-                else (
-                    'break; second IF'
-                )
-            )
+            if(contains($provinceName, 'Asia')) then
+                <document>
+                 <docId>{$docId}</docId>
+                 <docTitle>
+                     {
+                         for $i in $docTitle
+                         group by $j := $i
+                         return
+                            $j
+                     }
+                 </docTitle>
+                 <placeName>
+                     {
+                         for $i in $placeName
+                         group by $j := $i
+                         return
+                            $j
+                     }
+                 </placeName>
+                 <provinceName>
+                     {
+                         for $i in $provinceName
+                         group by $j := $i
+                         return
+                            $j
+                     }
+                 </provinceName>
+                </document>
+            else ('Nothing happens')
 };
 
 local:documents_with_common_province_name_from_places()
