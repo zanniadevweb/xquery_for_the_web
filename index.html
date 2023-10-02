@@ -1,0 +1,105 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<title>Xquery Live Demo - Alexandre ZANNI</title>
+	</head>
+	<body style="padding-left: 50px;">
+		<button onclick="showTable('Documents')">Documents</button></li>
+		<button onclick="showTable('People')">People</button></li>
+		<button onclick="showTable('Places')">Places</button></li>
+		<div id="table" class="table-wrapper"></div>
+	</body>
+		<script>
+			var documentsCsvFixture =  `Header 1;Header 2;Header 3;\\rValue 1 Line 1;Value 2 Line 1;Value 3 Line 1;\\rValue 1 Line 2;Value 2 Line 2;Value 3 Line 2;`;
+			var documentsCsv =  `id;title;uri;provenance;provenanceAltNames;provenanceUri;provenanceCoordinates;province;provinceUri;datingNotBefore;datingNotAfter\\rapcd1;Sarcophagus of the imperial freedman M. Aur. Victorinus ;https://patrimonium.huma-num.fr/documents/apcd1;Prymnessos;Prymnessus Sülün;https://patrimonium.huma-num.fr/places/16061;[30.568578, 38.696915];Asia;https://patrimonium.huma-num.fr/places/2275;176;225
+			\\rapcd2;Altar for Apollo dedicated by the imperial slave Eutyches ;https://patrimonium.huma-num.fr/documents/apcd2;Malos;Μάλος - δῆμος Μαληνῶν   Gökçeyayla, formerly Orhaniye or Kilise;https://patrimonium.huma-num.fr/places/52644;[30.7667, 39.0883];Asia;https://patrimonium.huma-num.fr/places/2275;161;268
+			\\rapcd3;Regulations concerning a temple in Arhilloi Ateimeitos;https://patrimonium.huma-num.fr/documents/apcd3;Asartepe;Περίκομμα? Τμῶλος  Asartepe, north of Urganlı;https://patrimonium.huma-num.fr/places/43326;[27.844933, 38.555483];Asia;https://patrimonium.huma-num.fr/places/2275;101;300
+			\\rapcd4;Funerary stele for the foster parents of the imperial slave Ateimetos ;https://patrimonium.huma-num.fr/documents/apcd4;Kışla;Kışla;https://patrimonium.huma-num.fr/places/34334;[29.1958, 38.4722];Asia;https://patrimonium.huma-num.fr/places/2275;201;300
+			\\rapcd5;Rescript of Septimius Severus and Caracalla to the coloni of Tymium ;https://patrimonium.huma-num.fr/documents/apcd5;Saraycik;area locally known as Saraycik, near Susuzören;https://patrimonium.huma-num.fr/places/52671;[29.46145967, 38.51617643];Latium et Campania (Regio I);https://patrimonium.huma-num.fr/places/2275;167;168
+			\\r`;
+			var peopleCsv =  `id;name;sex;personal_status;rank;citizenship;datingNotBefore;datingNotAfter
+			\\r26632;Ateimetos;Male;Imperial slave;;;176;225
+			\\r25540;...dius Marinus;Male;Freeborn;Equestrian;Roman;118;138
+			\\r24478;...tanius Felix;Male;Freeborn;;Roman;181;181
+			\\r25557;Ateimetos;Male;Freeborn;Equestrian;Roman;167;168
+			\\r3291;[--o]alias Ammonia;Female;;;;276;325
+			\\r1132;[-Iu]lius Ismarus Titianus;Male;Imperial slave;;Roman;14;50
+			\\r`;
+			var placesCsv =  `id;name;uri;geoCoord;type;province;provinceUri
+			\\r57643;House of L. Aelius Magnus, Pompei;https://patrimonium.huma-num.fr/places/57643;[14.486615766327306, 40.748325040757564];Area;Latium et Campania (Regio I);https://patrimonium.huma-num.fr/places/56490
+			\\r56691;"""Archive wall"" of the theatre of Aphrodisias";https://patrimonium.huma-num.fr/places/56691;[28.72538745425118, 37.707278708338784];Area;Asia;https://patrimonium.huma-num.fr/places/2275
+			\\r56950;"""La María"" farmi";https://patrimonium.huma-num.fr/places/56950;[-5.451375, 37.670637];Modern place;Baetica;https://patrimonium.huma-num.fr/places/25346
+			\\r52897;"""Levante"" necropolis, Aquileiai";https://patrimonium.huma-num.fr/places/52897;[13.377760, 45.783016];Area;Venetia et Histria (Regio X);https://patrimonium.huma-num.fr/places/33053
+			\\r52916;"""Sepolcreto"" necropolis, Aquileiai";https://patrimonium.huma-num.fr/places/52916;[13.362972, 45.768585];Area;Venetia et Histria (Regio X);https://patrimonium.huma-num.fr/places/33053
+			\\r56675;"""Syrian"" gate of Laodikeia on the Lykos";https://patrimonium.huma-num.fr/places/56675;[29.113363623837362, 37.83453701564804];Building;Asia;https://patrimonium.huma-num.fr/places/2275
+			\\r`;
+
+			showTable()
+			function showTable(table = 'Documents') {
+				var csvSeparatorChar = ';';
+				var csvBreakLineCharEscaped = '\\r';
+				var csvContent = [];
+				if (table == 'Documents') {
+					csvContent = documentsCsv;
+				} else if (table == 'People') {
+					csvContent = peopleCsv;
+				} else if (table == 'Places') {
+					csvContent = placesCsv;
+				}
+				var subArrayLine = [];
+				var id = 0;
+
+				csvValues = [];
+				csvContentLines = csvContent.split(csvBreakLineCharEscaped);
+				for (var it=0; it <= csvContentLines.length; it++) {
+					if (csvContentLines[it] && csvContentLines[it] !== csvSeparatorChar) {
+						separatedValuesOneLine = csvContentLines[it].split(csvSeparatorChar);
+						subArrayLine.push(separatedValuesOneLine);
+						csvValues.push(subArrayLine[0]);
+						subArrayLine = [];
+					}
+				}
+
+				importCsvDataIntoTable(csvValues, 'table');
+			}
+
+			function importCsvDataIntoTable(list, tableId) {
+				var cols = [];
+
+				for (var i = 0; i < list.length; i++) {
+					for (var k in list[i]) {
+						if (cols.indexOf(k) === -1) {
+							cols.push(k);
+						}
+					}
+				}
+
+				var table = document.createElement("table");
+				table.setAttribute("class", "sortable");
+				table.setAttribute("border", "1px solid black");
+				table.setAttribute("id", "tableData");
+
+				var thead = document.createElement("thead");
+				var tr = table.appendChild(thead);
+
+				for (var i = 0; i < cols.length; i++) {
+					var theader = document.createElement("th");
+					theader.innerHTML = list[0][i];
+					tr.appendChild(theader);
+				}
+
+				for (var i = 1; i < list.length; i++) {
+					trow = table.insertRow(-1);
+					for (var j = 0; j < cols.length; j++) {
+						var cell = trow.insertCell(-1);
+						cell.innerHTML = list[i][cols[j]];
+					}
+				}
+
+				var el = document.getElementById(tableId);
+				el.innerHTML = "";
+				el.appendChild(table);
+			}
+		</script>
+	</body>
+</html>
