@@ -1,0 +1,57 @@
+<places>
+   <headers>id, name, nameDatatableRender, uri, geoCoord, type, productionType, province, provinceUri, provinceName, exactMatch, altNames</headers>
+   <place>
+      <id>57643</id>
+      <name>House of L. Aelius Magnus, Pompei</name>
+      <uri>https://patrimonium.huma-num.fr/places/57643</uri>
+      <geocoord>[14.486615766327306, 40.748325040757564]</geocoord>
+      <type>Area</type>
+      <province>Latium et Campania (Regio I)</province>
+      <provinceuri>https://patrimonium.huma-num.fr/places/56490</provinceuri>
+   </place>
+   <place>
+      <id>56691</id>
+      <name>"Archive wall" of the theatre of Aphrodisias</name>
+      <uri>https://patrimonium.huma-num.fr/places/56691</uri>
+      <geocoord>[28.72538745425118, 37.707278708338784]</geocoord>
+      <type>Area</type>
+      <province>Asia</province>
+      <provinceuri>https://patrimonium.huma-num.fr/places/2275</provinceuri>
+   </place>
+   <place>
+      <id>56950</id>
+      <name>"La María" farmi</name>
+      <uri>https://patrimonium.huma-num.fr/places/56950</uri>
+      <geocoord>[-5.451375, 37.670637]</geocoord>
+      <type>Modern place</type>
+      <province>Baetica</province>
+      <provinceuri>https://patrimonium.huma-num.fr/places/25346</provinceuri>
+   </place>
+   <place>
+      <id>52897</id>
+      <name>"Levante" necropolis, Aquileiai</name>
+      <uri>https://patrimonium.huma-num.fr/places/52897</uri>
+      <geocoord>[13.377760, 45.783016]</geocoord>
+      <type>Area</type>
+      <province>Venetia et Histria (Regio X)</province>
+      <provinceuri>https://patrimonium.huma-num.fr/places/33053</provinceuri>
+   </place>
+   <place>
+      <id>52916</id>
+      <name>"Sepolcreto" necropolis, Aquileiai</name>
+      <uri>https://patrimonium.huma-num.fr/places/52916</uri>
+      <geocoord>[13.362972, 45.768585]</geocoord>
+      <type>Area</type>
+      <province>Venetia et Histria (Regio X)</province>
+      <provinceuri>https://patrimonium.huma-num.fr/places/33053</provinceuri>
+   </place>
+   <place>
+      <id>56675</id>
+      <name>"Syrian" gate of Laodikeia on the Lykos</name>
+      <uri>https://patrimonium.huma-num.fr/places/56675</uri>
+      <geocoord>[29.113363623837362, 37.83453701564804]</geocoord>
+      <type>Building</type>
+      <province>Asia</province>
+      <provinceuri>https://patrimonium.huma-num.fr/places/2275</provinceuri>
+   </place>
+</places>

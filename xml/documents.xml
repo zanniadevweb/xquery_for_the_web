@@ -1,0 +1,67 @@
+<documents>
+   <document>
+      <id>apcd1</id>
+      <title>Sarcophagus of the imperial freedman M. Aur. Victorinus</title>
+      <uri>https://patrimonium.huma-num.fr/documents/apcd1</uri>
+      <provenance>Prymnessos</provenance>
+      <provenancealtnames>Prymnessus Sülün</provenancealtnames>
+      <provenanceuri>https://patrimonium.huma-num.fr/places/16061</provenanceuri>
+      <provenancecoordinates>[30.568578, 38.696915]</provenancecoordinates>
+      <province>ddd)</province>
+      <provinceuri>https://patrimonium.huma-num.fr/places/2275</provinceuri>
+      <datingnotbefore>176</datingnotbefore>
+      <datingnotafter>225</datingnotafter>
+   </document>
+   <document>
+      <id>apcd2</id>
+      <title>Altar for Apollo dedicated by the imperial slave Eutyches</title>
+      <uri>https://patrimonium.huma-num.fr/documents/apcd2</uri>
+      <provenance>Malos</provenance>
+      <provenancealtnames>Μάλος - δῆμος Μαληνῶν   Gökçeyayla, formerly Orhaniye or Kilise</provenancealtnames>
+      <provenanceuri>https://patrimonium.huma-num.fr/places/52644</provenanceuri>
+      <provenancecoordinates>[30.7667, 39.0883]</provenancecoordinates>
+      <province>Asia</province>
+      <provinceuri>https://patrimonium.huma-num.fr/places/2275</provinceuri>
+      <datingnotbefore>161</datingnotbefore>
+      <datingnotafter>268</datingnotafter>
+   </document>
+   <document>
+      <id>apcd3</id>
+      <title>Regulations concerning a temple in Arhilloi Ateimetos</title>
+      <uri>https://patrimonium.huma-num.fr/documents/apcd3</uri>
+      <provenance>Asartepe</provenance>
+      <provenancealtnames>Περίκομμα? Τμῶλος  Asartepe, north of Urganlı</provenancealtnames>
+      <provenanceuri>https://patrimonium.huma-num.fr/places/43326</provenanceuri>
+      <provenancecoordinates>[27.844933, 38.555483]</provenancecoordinates>
+      <province>Asia</province>
+      <provinceuri>https://patrimonium.huma-num.fr/places/2275</provinceuri>
+      <datingnotbefore>101</datingnotbefore>
+      <datingnotafter>300</datingnotafter>
+   </document>
+   <document>
+      <id>apcd4</id>
+      <title>Funerary stele for the foster parents of the imperial slave Ateimetos</title>
+      <uri>https://patrimonium.huma-num.fr/documents/apcd4</uri>
+      <provenance>Kışla</provenance>
+      <provenancealtnames>Kışla</provenancealtnames>
+      <provenanceuri>https://patrimonium.huma-num.fr/places/34334</provenanceuri>
+      <provenancecoordinates>[29.1958, 38.4722]</provenancecoordinates>
+      <province>Asia</province>
+      <provinceuri>https://patrimonium.huma-num.fr/places/2275</provinceuri>
+      <datingnotbefore>201</datingnotbefore>
+      <datingnotafter>300</datingnotafter>
+   </document>
+   <document>
+      <id>apcd5</id>
+      <title>Rescript of Septimius Severus and Caracalla to the coloni of Tymium</title>
+      <uri>https://patrimonium.huma-num.fr/documents/apcd5</uri>
+      <provenance>Saraycik</provenance>
+      <provenancealtnames>area locally known as Saraycik, near Susuzören</provenancealtnames>
+      <provenanceuri>https://patrimonium.huma-num.fr/places/52671</provenanceuri>
+      <provenancecoordinates>[29.46145967, 38.51617643]</provenancecoordinates>
+      <province>Latium et Campania (Regio I)</province>
+      <provinceuri>https://patrimonium.huma-num.fr/places/2275</provinceuri>
+      <datingnotbefore>167</datingnotbefore>
+      <datingnotafter>168</datingnotafter>
+   </document>
+</documents>
