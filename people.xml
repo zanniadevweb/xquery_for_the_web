@@ -3,12 +3,14 @@
    <headers>id, name, nameDatatableRender, uri, geoCoord, type, citizenship, citizenshipLink, rank, provinceName, exactMatch, altNames</headers>
    <person>
       <id>26632</id>
-      <name>Laeonas</name>
+      <name>Ateimetos</name>
       <sex>Male</sex>
       <personal_status>Imperial slave</personal_status>
       <type>ausohnum.huma-num.fr/concept/c21998</type>
       <citizenship></citizenship>
       <rank></rank>
+      <datingnotbefore>176</datingnotbefore>
+      <datingnotafter>225</datingnotafter>
    </person>
    <person>
       <id>25540</id>
@@ -17,6 +19,8 @@
       <personal_status>Freeborn</personal_status>
       <citizenship>Roman</citizenship>
       <rank>Equestrian</rank>
+      <datingnotbefore>118</datingnotbefore>
+      <datingnotafter>138</datingnotafter>
    </person>
    <person>
       <id>24478</id>
@@ -25,14 +29,18 @@
       <personal_status>Freeborn</personal_status>
       <citizenship>Roman</citizenship>
       <rank></rank>
+      <datingnotbefore>181</datingnotbefore>
+      <datingnotafter>181</datingnotafter>
    </person>
    <person>
       <id>25557</id>
-      <name>[---]lius Cu[---]</name>
+      <name>Ateimetos</name>
       <sex>Male</sex>
       <personal_status>Freeborn</personal_status>
       <citizenship>Roman</citizenship>
       <rank>Equestrian</rank>
+      <datingnotbefore>167</datingnotbefore>
+      <datingnotafter>168</datingnotafter>
    </person>
    <person>
       <id>3291</id>
@@ -41,6 +49,8 @@
       <personal_status></personal_status>
       <citizenship></citizenship>
       <rank></rank>
+      <datingnotbefore>276</datingnotbefore>
+      <datingnotafter>325</datingnotafter>
    </person>
    <person>
       <id>1132</id>
@@ -49,5 +59,7 @@
       <personal_status>Imperial slave</personal_status>
       <citizenship>Roman</citizenship>
       <rank></rank>
+      <datingnotbefore>14</datingnotbefore>
+      <datingnotafter>50</datingnotafter>
    </person>
 </people>
