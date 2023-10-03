@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <people>
-   <headers>id, name, nameDatatableRender, uri, geoCoord, type, citizenship, citizenshipLink, rank, provinceName, exactMatch, altNames</headers>
    <person>
       <id>26632</id>
       <name>Ateimetos</name>

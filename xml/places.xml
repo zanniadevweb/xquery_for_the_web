@@ -1,5 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <places>
-   <headers>id, name, nameDatatableRender, uri, geoCoord, type, productionType, province, provinceUri, provinceName, exactMatch, altNames</headers>
    <place>
       <id>57643</id>
       <name>House of L. Aelius Magnus, Pompei</name>
