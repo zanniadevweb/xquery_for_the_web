@@ -7,16 +7,24 @@
 		<button onclick="showTable('Documents')">Documents</button></li>
 		<button onclick="showTable('People')">People</button></li>
 		<button onclick="showTable('Places')">Places</button></li>
+		<div id="titleTable">Tableau affiché : "Documents"</div>
 		<div id="table" class="table-wrapper"></div>
+	  </br></br>Choisir un filtre en cliquant sur les boutons ci-dessous : </br></br>
+		<button onclick="filterXml('Filter1')">Tous les "DOCUMENTS" qui ont un nom de "province" commun parmi tous les lieux ("PLACES")</button></li></br></br>
+		<button onclick="filterXml('Filter2')">Tous les "DOCUMENTS" et personnes ("PEOPLE") dont les dates (datingNotBefore, datingNotAfter) sont comprises dans la plage de valeurs modifiable ci-contre :</button></li><input id="datingNotBefore" placeholder="datingNotBefore. ex : 167"/><input id="datingNotAfter" placeholder="datingNotAfter. ex : 181"/></br></br>
+		<button onclick="filterXml('Filter3')">Toutes les personnes ("PEOPLE") dont le nom se trouve dans le titre d'un document ("DOCUMENTS") et qui viennent d'une "province" ("PLACES") spécifique modifiable ci-contre :</button></li><input id="province" placeholder="province. ex : Asia"/></br></br>
+		<div id="result">...</div></br></br>
 	</body>
 		<script>
 			var documentsCsvFixture =  `Header 1;Header 2;Header 3;\\rValue 1 Line 1;Value 2 Line 1;Value 3 Line 1;\\rValue 1 Line 2;Value 2 Line 2;Value 3 Line 2;`;
+
 			var documentsCsv =  `id;title;uri;provenance;provenanceAltNames;provenanceUri;provenanceCoordinates;province;provinceUri;datingNotBefore;datingNotAfter\\rapcd1;Sarcophagus of the imperial freedman M. Aur. Victorinus ;https://patrimonium.huma-num.fr/documents/apcd1;Prymnessos;Prymnessus Sülün;https://patrimonium.huma-num.fr/places/16061;[30.568578, 38.696915];Asia;https://patrimonium.huma-num.fr/places/2275;176;225
 			\\rapcd2;Altar for Apollo dedicated by the imperial slave Eutyches ;https://patrimonium.huma-num.fr/documents/apcd2;Malos;Μάλος - δῆμος Μαληνῶν   Gökçeyayla, formerly Orhaniye or Kilise;https://patrimonium.huma-num.fr/places/52644;[30.7667, 39.0883];Asia;https://patrimonium.huma-num.fr/places/2275;161;268
 			\\rapcd3;Regulations concerning a temple in Arhilloi Ateimeitos;https://patrimonium.huma-num.fr/documents/apcd3;Asartepe;Περίκομμα? Τμῶλος  Asartepe, north of Urganlı;https://patrimonium.huma-num.fr/places/43326;[27.844933, 38.555483];Asia;https://patrimonium.huma-num.fr/places/2275;101;300
 			\\rapcd4;Funerary stele for the foster parents of the imperial slave Ateimetos ;https://patrimonium.huma-num.fr/documents/apcd4;Kışla;Kışla;https://patrimonium.huma-num.fr/places/34334;[29.1958, 38.4722];Asia;https://patrimonium.huma-num.fr/places/2275;201;300
 			\\rapcd5;Rescript of Septimius Severus and Caracalla to the coloni of Tymium ;https://patrimonium.huma-num.fr/documents/apcd5;Saraycik;area locally known as Saraycik, near Susuzören;https://patrimonium.huma-num.fr/places/52671;[29.46145967, 38.51617643];Latium et Campania (Regio I);https://patrimonium.huma-num.fr/places/2275;167;168
 			\\r`;
+
 			var peopleCsv =  `id;name;sex;personal_status;rank;citizenship;datingNotBefore;datingNotAfter
 			\\r26632;Ateimetos;Male;Imperial slave;;;176;225
 			\\r25540;...dius Marinus;Male;Freeborn;Equestrian;Roman;118;138
@@ -25,6 +33,7 @@
 			\\r3291;[--o]alias Ammonia;Female;;;;276;325
 			\\r1132;[-Iu]lius Ismarus Titianus;Male;Imperial slave;;Roman;14;50
 			\\r`;
+
 			var placesCsv =  `id;name;uri;geoCoord;type;province;provinceUri
 			\\r57643;House of L. Aelius Magnus, Pompei;https://patrimonium.huma-num.fr/places/57643;[14.486615766327306, 40.748325040757564];Area;Latium et Campania (Regio I);https://patrimonium.huma-num.fr/places/56490
 			\\r56691;"""Archive wall"" of the theatre of Aphrodisias";https://patrimonium.huma-num.fr/places/56691;[28.72538745425118, 37.707278708338784];Area;Asia;https://patrimonium.huma-num.fr/places/2275
@@ -34,11 +43,203 @@
 			\\r56675;"""Syrian"" gate of Laodikeia on the Lykos";https://patrimonium.huma-num.fr/places/56675;[29.113363623837362, 37.83453701564804];Building;Asia;https://patrimonium.huma-num.fr/places/2275
 			\\r`;
 
+			var documentsXml = `
+			<documents>
+			   <document>
+			      <id>apcd1</id>
+			      <title>Sarcophagus of the imperial freedman M. Aur. Victorinus</title>
+			      <uri>https://patrimonium.huma-num.fr/documents/apcd1</uri>
+			      <provenance>Prymnessos</provenance>
+			      <provenancealtnames>Prymnessus Sülün</provenancealtnames>
+			      <provenanceuri>https://patrimonium.huma-num.fr/places/16061</provenanceuri>
+			      <provenancecoordinates>[30.568578, 38.696915]</provenancecoordinates>
+			      <province>ddd)</province>
+			      <provinceuri>https://patrimonium.huma-num.fr/places/2275</provinceuri>
+			      <datingnotbefore>176</datingnotbefore>
+			      <datingnotafter>225</datingnotafter>
+			   </document>
+			   <document>
+			      <id>apcd2</id>
+			      <title>Altar for Apollo dedicated by the imperial slave Eutyches</title>
+			      <uri>https://patrimonium.huma-num.fr/documents/apcd2</uri>
+			      <provenance>Malos</provenance>
+			      <provenancealtnames>Μάλος - δῆμος Μαληνῶν   Gökçeyayla, formerly Orhaniye or Kilise</provenancealtnames>
+			      <provenanceuri>https://patrimonium.huma-num.fr/places/52644</provenanceuri>
+			      <provenancecoordinates>[30.7667, 39.0883]</provenancecoordinates>
+			      <province>Asia</province>
+			      <provinceuri>https://patrimonium.huma-num.fr/places/2275</provinceuri>
+			      <datingnotbefore>161</datingnotbefore>
+			      <datingnotafter>268</datingnotafter>
+			   </document>
+			   <document>
+			      <id>apcd3</id>
+			      <title>Regulations concerning a temple in Arhilloi Ateimetos</title>
+			      <uri>https://patrimonium.huma-num.fr/documents/apcd3</uri>
+			      <provenance>Asartepe</provenance>
+			      <provenancealtnames>Περίκομμα? Τμῶλος  Asartepe, north of Urganlı</provenancealtnames>
+			      <provenanceuri>https://patrimonium.huma-num.fr/places/43326</provenanceuri>
+			      <provenancecoordinates>[27.844933, 38.555483]</provenancecoordinates>
+			      <province>Asia</province>
+			      <provinceuri>https://patrimonium.huma-num.fr/places/2275</provinceuri>
+			      <datingnotbefore>101</datingnotbefore>
+			      <datingnotafter>300</datingnotafter>
+			   </document>
+			   <document>
+			      <id>apcd4</id>
+			      <title>Funerary stele for the foster parents of the imperial slave Ateimetos</title>
+			      <uri>https://patrimonium.huma-num.fr/documents/apcd4</uri>
+			      <provenance>Kışla</provenance>
+			      <provenancealtnames>Kışla</provenancealtnames>
+			      <provenanceuri>https://patrimonium.huma-num.fr/places/34334</provenanceuri>
+			      <provenancecoordinates>[29.1958, 38.4722]</provenancecoordinates>
+			      <province>Asia</province>
+			      <provinceuri>https://patrimonium.huma-num.fr/places/2275</provinceuri>
+			      <datingnotbefore>201</datingnotbefore>
+			      <datingnotafter>300</datingnotafter>
+			   </document>
+			   <document>
+			      <id>apcd5</id>
+			      <title>Rescript of Septimius Severus and Caracalla to the coloni of Tymium</title>
+			      <uri>https://patrimonium.huma-num.fr/documents/apcd5</uri>
+			      <provenance>Saraycik</provenance>
+			      <provenancealtnames>area locally known as Saraycik, near Susuzören</provenancealtnames>
+			      <provenanceuri>https://patrimonium.huma-num.fr/places/52671</provenanceuri>
+			      <provenancecoordinates>[29.46145967, 38.51617643]</provenancecoordinates>
+			      <province>Latium et Campania (Regio I)</province>
+			      <provinceuri>https://patrimonium.huma-num.fr/places/2275</provinceuri>
+			      <datingnotbefore>167</datingnotbefore>
+			      <datingnotafter>168</datingnotafter>
+			   </document>
+			</documents>`;
+
+			var peopleXml = `
+			<people>
+			   <person>
+			      <id>26632</id>
+			      <name>Ateimetos</name>
+			      <sex>Male</sex>
+			      <personal_status>Imperial slave</personal_status>
+			      <citizenship></citizenship>
+			      <rank></rank>
+			      <datingnotbefore>176</datingnotbefore>
+			      <datingnotafter>225</datingnotafter>
+			   </person>
+			   <person>
+			      <id>25540</id>
+			      <name>...dius Marinus</name>
+			      <sex>Male</sex>
+			      <personal_status>Freeborn</personal_status>
+			      <citizenship>Roman</citizenship>
+			      <rank>Equestrian</rank>
+			      <datingnotbefore>118</datingnotbefore>
+			      <datingnotafter>138</datingnotafter>
+			   </person>
+			   <person>
+			      <id>24478</id>
+			      <name>...tanius Felix</name>
+			      <sex>Male</sex>
+			      <personal_status>Freeborn</personal_status>
+			      <citizenship>Roman</citizenship>
+			      <rank></rank>
+			      <datingnotbefore>181</datingnotbefore>
+			      <datingnotafter>181</datingnotafter>
+			   </person>
+			   <person>
+			      <id>25557</id>
+			      <name>Ateimetos</name>
+			      <sex>Male</sex>
+			      <personal_status>Freeborn</personal_status>
+			      <citizenship>Roman</citizenship>
+			      <rank>Equestrian</rank>
+			      <datingnotbefore>167</datingnotbefore>
+			      <datingnotafter>168</datingnotafter>
+			   </person>
+			   <person>
+			      <id>3291</id>
+			      <name>[--o]alias Ammonia</name>
+			      <sex>Female</sex>
+			      <personal_status></personal_status>
+			      <citizenship></citizenship>
+			      <rank></rank>
+			      <datingnotbefore>276</datingnotbefore>
+			      <datingnotafter>325</datingnotafter>
+			   </person>
+			   <person>
+			      <id>1132</id>
+			      <name>[-Iu]lius Ismarus Titianus</name>
+			      <sex>Male</sex>
+			      <personal_status>Imperial slave</personal_status>
+			      <citizenship>Roman</citizenship>
+			      <rank></rank>
+			      <datingnotbefore>14</datingnotbefore>
+			      <datingnotafter>50</datingnotafter>
+			   </person>
+			</people>`;
+
+			var placesXml = `
+			<places>
+			   <place>
+			      <id>57643</id>
+			      <name>House of L. Aelius Magnus, Pompei</name>
+			      <uri>https://patrimonium.huma-num.fr/places/57643</uri>
+			      <geocoord>[14.486615766327306, 40.748325040757564]</geocoord>
+			      <type>Area</type>
+			      <province>Latium et Campania (Regio I)</province>
+			      <provinceuri>https://patrimonium.huma-num.fr/places/56490</provinceuri>
+			   </place>
+			   <place>
+			      <id>56691</id>
+			      <name>"Archive wall" of the theatre of Aphrodisias</name>
+			      <uri>https://patrimonium.huma-num.fr/places/56691</uri>
+			      <geocoord>[28.72538745425118, 37.707278708338784]</geocoord>
+			      <type>Area</type>
+			      <province>Asia</province>
+			      <provinceuri>https://patrimonium.huma-num.fr/places/2275</provinceuri>
+			   </place>
+			   <place>
+			      <id>56950</id>
+			      <name>"La María" farmi</name>
+			      <uri>https://patrimonium.huma-num.fr/places/56950</uri>
+			      <geocoord>[-5.451375, 37.670637]</geocoord>
+			      <type>Modern place</type>
+			      <province>Baetica</province>
+			      <provinceuri>https://patrimonium.huma-num.fr/places/25346</provinceuri>
+			   </place>
+			   <place>
+			      <id>52897</id>
+			      <name>"Levante" necropolis, Aquileiai</name>
+			      <uri>https://patrimonium.huma-num.fr/places/52897</uri>
+			      <geocoord>[13.377760, 45.783016]</geocoord>
+			      <type>Area</type>
+			      <province>Venetia et Histria (Regio X)</province>
+			      <provinceuri>https://patrimonium.huma-num.fr/places/33053</provinceuri>
+			   </place>
+			   <place>
+			      <id>52916</id>
+			      <name>"Sepolcreto" necropolis, Aquileiai</name>
+			      <uri>https://patrimonium.huma-num.fr/places/52916</uri>
+			      <geocoord>[13.362972, 45.768585]</geocoord>
+			      <type>Area</type>
+			      <province>Venetia et Histria (Regio X)</province>
+			      <provinceuri>https://patrimonium.huma-num.fr/places/33053</provinceuri>
+			   </place>
+			   <place>
+			      <id>56675</id>
+			      <name>"Syrian" gate of Laodikeia on the Lykos</name>
+			      <uri>https://patrimonium.huma-num.fr/places/56675</uri>
+			      <geocoord>[29.113363623837362, 37.83453701564804]</geocoord>
+			      <type>Building</type>
+			      <province>Asia</province>
+			      <provinceuri>https://patrimonium.huma-num.fr/places/2275</provinceuri>
+			   </place>
+			</places>`;
+
 			showTable()
 			function showTable(table = 'Documents') {
 				var csvSeparatorChar = ';';
 				var csvBreakLineCharEscaped = '\\r';
 				var csvContent = [];
+				document.getElementById('titleTable').innerHTML = 'Tableau affiché : "'+table+'"'
 				if (table == 'Documents') {
 					csvContent = documentsCsv;
 				} else if (table == 'People') {
@@ -99,6 +300,133 @@
 				var el = document.getElementById(tableId);
 				el.innerHTML = "";
 				el.appendChild(table);
+			}
+
+			function filterXml(filter = 'Filter1') {
+				// var parsedXml = '' // TODO
+				var requiredXml = []
+				if (filter == 'Filter1') {
+					// TODO
+					requiredXml.push('Documents', 'Places')
+				} else if (filter == 'Filter2') {
+					// TODO
+					requiredXml.push('Documents', 'People')
+					var datingNotBefore = document.getElementById('datingNotBefore').value;
+					if (datingNotBefore == '') {
+						datingNotBefore = '167'
+					}
+					datingNotBefore = parseInt(datingNotBefore);
+					var datingNotAfter = document.getElementById('datingNotAfter').value;
+					if (datingNotAfter == '') {
+						datingNotAfter = '181'
+					}
+					datingNotAfter = parseInt(datingNotAfter);
+					// console.log(datingNotBefore)
+					// console.log(datingNotAfter)
+				} else if (filter == 'Filter3') {
+					// TODO
+					requiredXml.push('People', 'Documents', 'Places')
+					var province = document.getElementById('province').value;
+					if (province == '') {
+						province = 'Asia'
+					}
+				}
+				returnFilteredDataFromXmls(filter, requiredXml)
+			}
+
+			function returnFilteredDataFromXmls(filter, requiredXml) {
+				var loadedXml = {}
+				for (var reqXml = 0; reqXml < requiredXml.length; reqXml++) {
+					if (requiredXml[reqXml] == 'Documents') {
+						loadedXml['documents'] = removeLineBreaksFromXmlStr(documentsXml)
+					} else if (requiredXml[reqXml] == 'People') {
+						loadedXml['people'] = removeLineBreaksFromXmlStr(peopleXml)
+					} else if (requiredXml[reqXml] == 'Places') {
+						loadedXml['places'] = removeLineBreaksFromXmlStr(placesXml)
+					}
+				}
+
+				parser = new DOMParser();
+
+				var xmlPlaces = parser.parseFromString(loadedXml['places'],"text/xml");
+				var arrProvincePlaces = nodeValuesByTagFromCollection(xmlPlaces.getElementsByTagName("province"))
+				var groupedByProvPlaces = uniqueValFromArray(arrProvincePlaces)
+
+				var xmlDocs = parser.parseFromString(loadedXml['documents'],"text/xml");
+				var arrayDocs = arrayFromXmlStr(xmlDocs, 'document')
+				var docsMatchPosArr = []
+				for (var provIt = 0; provIt < groupedByProvPlaces.length; provIt++) {
+					let potentialMatch = childNodesFromCollection(xmlDocs.getElementsByTagName("province"),groupedByProvPlaces[provIt]);
+					if (potentialMatch.length > 0) {
+						docsMatchPosArr.push(potentialMatch)
+					}
+				}
+				var flattenPotentialMatches = docsMatchPosArr.join().split(',')
+				flattenPotentialMatches = flattenPotentialMatches.map(function (x) {
+				  return parseInt(x, 10);
+				});
+				var docsMatchingProvinceName = valuesFromArrayXmlByPosArray(arrayDocs, flattenPotentialMatches)
+
+				if (filter == 'Filter1') {
+					document.getElementById('result').innerHTML = docsMatchingProvinceName
+				} else if (filter == 'Filter2') {
+					// TODO
+				} else if (filter == 'Filter3') {
+					// TODO
+				}
+			}
+
+			function removeLineBreaksFromXmlStr(string) {
+				return string.replaceAll(/(\r\n|\n|\r)/gm, '').replaceAll('\t','')
+			}
+
+			function childNodesFromCollection(collection, matchCondition = undefined) {
+				arrayColl = []
+				for (var childPos = 0; childPos < collection.length; childPos++) {
+					var tmpChild = collection[childPos]
+					var tmpChildVal = tmpChild.childNodes[0].nodeValue
+					if (matchCondition !== undefined) {
+						if (tmpChildVal == matchCondition) {
+							arrayColl.push(childPos)
+						}
+					} else {
+						arrayColl.push(childPos)
+					}
+				}
+				return arrayColl
+			}
+
+			function nodeValuesByTagFromCollection(collection) {
+				arrayColl = []
+				for (var childPos = 0; childPos < collection.length; childPos++) {
+					var tmpChild = collection[childPos]
+					var tmpChildVal = tmpChild.childNodes[0].nodeValue
+					arrayColl.push(tmpChildVal)
+				}
+				return arrayColl
+			}
+
+			function arrayFromXmlStr(xml, strMatchTag) {
+				var nodeValue = xml.childNodes[0].innerHTML
+				var arr = nodeValue.split('</'+strMatchTag+'>')
+				var lastElArr = arr[arr.length - 1]
+				if (lastElArr == '') { arr.pop() }
+				return arr
+			}
+
+			function valuesFromArrayXmlByPosArray(array, matchPosArr) {
+				var values = []
+				for (var arrIt = 0; arrIt < array.length; arrIt++) {
+					if (matchPosArr.includes(arrIt)) {
+						values.push(array[arrIt])
+					}
+				}
+				return values
+			}
+
+			function uniqueValFromArray(array) {
+				let a = array
+				return a.filter((item, i, ar) => ar.indexOf(item) === i);
 			}
 		</script>
 	</body>
