@@ -12,7 +12,7 @@
 	  </br></br>Choisir un filtre en cliquant sur les boutons ci-dessous : </br></br>
 		<button onclick="filterXml('Filter1')">Tous les "DOCUMENTS" qui ont un nom de "province" commun parmi l'ensemble des lieux ("PLACES")</button></li></br></br>
 		<button onclick="filterXml('Filter2')">Tous les "DOCUMENTS" et personnes ("PEOPLE") dont les dates (datingNotBefore, datingNotAfter) sont comprises dans la plage de valeurs modifiable ci-contre :</button></li><input id="datingNotBefore" placeholder="datingNotBefore. ex : 167"/><input id="datingNotAfter" placeholder="datingNotAfter. ex : 181"/></br></br>
-		<button onclick="filterXml('Filter3')">Toutes les personnes ("PEOPLE") dont le nom se trouve dans le titre d'un document ("DOCUMENTS") et qui viennent d'une "province" ("PLACES") spécifique modifiable ci-contre :</button></li><input id="province" placeholder="province. ex : Asia"/></br></br>
+		<button onclick="filterXml('Filter3')">Toutes les personnes ("PEOPLE") dont le nom se trouve dans le titre d'un document ("DOCUMENTS") et qui viennent d'une "province" spécifique modifiable ci-contre :</button></li><input id="province" placeholder="province. ex : Asia"/></br></br>
 		<div id="result">...</div></br></br>
 	</body>
 		<script>
@@ -273,7 +273,6 @@
 			}
 
 			function filterXml(filter = 'Filter1') {
-				// var parsedXml = '' // TODO
 				var requiredXml = []
 				if (filter == 'Filter1') {
 					requiredXml.push('Documents', 'Places')
@@ -289,20 +288,17 @@
 						datingNotAfter = 181
 					}
 					datingNotAfter = parseInt(datingNotAfter);
-					// console.log(datingNotBefore)
-					// console.log(datingNotAfter)
 				} else if (filter == 'Filter3') {
-					// TODO
-					requiredXml.push('People', 'Documents', 'Places')
+					requiredXml.push('People', 'Documents')
 					var province = document.getElementById('province').value;
 					if (province == '') {
 						province = 'Asia'
 					}
 				}
-				returnFilteredDataFromXmls(filter, requiredXml, datingNotBefore, datingNotAfter)
+				returnFilteredDataFromXmls(filter, requiredXml, datingNotBefore, datingNotAfter, province)
 			}
 
-			function returnFilteredDataFromXmls(filter, requiredXml, datingNotBefore = 167, datingNotAfter = 181) {
+			function returnFilteredDataFromXmls(filter, requiredXml, datingNotBefore = 167, datingNotAfter = 181, province = 'Asia') {
 				var loadedXml = {}
 				parser = new DOMParser();
 				var xmlPlaces = '';
@@ -320,9 +316,11 @@
 					} else if (requiredXml[reqXml] == 'Places') {
 						loadedXml['places'] = removeLineBreaksFromXmlStr(placesXml)
 						xmlPlaces = parser.parseFromString(loadedXml['places'],"text/xml");
-						arrayPlaces = arrayFromXmlStr(xmlDocs, 'place')
+						arrayPlaces = arrayFromXmlStr(xmlPlaces, 'place')
 					}
 				}
+
+				var resultFiltering = ''
 
 				if (filter == 'Filter1') {
 
@@ -342,7 +340,7 @@
 					});
 
 					var docsMatchingProvinceName = valuesFromArrayXmlByPosArray(arrayDocs, flattenPotentialMatches)
-					document.getElementById('result').innerHTML = docsMatchingProvinceName
+					resultFiltering = docsMatchingProvinceName
 
 				} else if (filter == 'Filter2') {
 
@@ -387,14 +385,40 @@
 					}
 
 					var docsAndPeopleMatchingRangeOfDates = uniqueValFromArray(matchConcatArrDocs.concat(matchConcatArrPeople))
-					document.getElementById('result').innerHTML = docsAndPeopleMatchingRangeOfDates
+					resultFiltering = docsAndPeopleMatchingRangeOfDates
 
 				} else if (filter == 'Filter3') {
 
-					// TODO
-					document.getElementById('result').innerHTML = ''
-					
+					var matchPosByProvince = childNodesFromCollection(xmlDocs.getElementsByTagName("province"),province);
+
+					var arrProvinceDocs = []
+					for (var docProvIt = 0; docProvIt < arrayDocs.length; docProvIt++) {
+						if (matchPosByProvince.includes(docProvIt)) {
+							arrProvinceDocs.push(arrayDocs[docProvIt])
+						}
+					}
+
+					matchArrDocsProv = []
+					for (var arrDocsProvIt = 0; arrDocsProvIt < arrProvinceDocs.length; arrDocsProvIt++) {
+						let tmp1DocTitle = arrProvinceDocs[arrDocsProvIt].split('<title>')[1]
+						let tmp2DocTitle = tmp1DocTitle.split('</title>')[0]
+						let docTitle = tmp2DocTitle
+						var namesPeople = nodeValuesByTagFromCollection(xmlPeople.getElementsByTagName("name"));
+						for (var namPplIt = 0; namPplIt < namesPeople.length; namPplIt++) {
+							if (docTitle.includes(namesPeople[namPplIt])) {
+								matchArrDocsProv.push(namPplIt)
+							}
+						}
+					}
+
+					matchArrDocsProv = uniqueValFromArray(matchArrDocsProv)
+
+					var peopleWithNameInDocumentTitleFromAProvince = valuesFromArrayXmlByPosArray(arrayPeople, matchArrDocsProv)
+					resultFiltering = peopleWithNameInDocumentTitleFromAProvince
+
 				}
+
+				document.getElementById('result').innerHTML = resultFiltering
 			}
 
 			function removeLineBreaksFromXmlStr(string) {
