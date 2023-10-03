@@ -276,19 +276,17 @@
 				// var parsedXml = '' // TODO
 				var requiredXml = []
 				if (filter == 'Filter1') {
-					// TODO
 					requiredXml.push('Documents', 'Places')
 				} else if (filter == 'Filter2') {
-					// TODO
 					requiredXml.push('Documents', 'People')
 					var datingNotBefore = document.getElementById('datingNotBefore').value;
 					if (datingNotBefore == '') {
-						datingNotBefore = '167'
+						datingNotBefore = 167
 					}
 					datingNotBefore = parseInt(datingNotBefore);
 					var datingNotAfter = document.getElementById('datingNotAfter').value;
 					if (datingNotAfter == '') {
-						datingNotAfter = '181'
+						datingNotAfter = 181
 					}
 					datingNotAfter = parseInt(datingNotAfter);
 					// console.log(datingNotBefore)
@@ -301,48 +299,101 @@
 						province = 'Asia'
 					}
 				}
-				returnFilteredDataFromXmls(filter, requiredXml)
+				returnFilteredDataFromXmls(filter, requiredXml, datingNotBefore, datingNotAfter)
 			}
 
-			function returnFilteredDataFromXmls(filter, requiredXml) {
+			function returnFilteredDataFromXmls(filter, requiredXml, datingNotBefore = 167, datingNotAfter = 181) {
 				var loadedXml = {}
+				parser = new DOMParser();
+				var xmlPlaces = '';
+				var xmlDocs = '';
+				var arrayDocs = []
 				for (var reqXml = 0; reqXml < requiredXml.length; reqXml++) {
 					if (requiredXml[reqXml] == 'Documents') {
 						loadedXml['documents'] = removeLineBreaksFromXmlStr(documentsXml)
+						xmlDocs = parser.parseFromString(loadedXml['documents'],"text/xml");
+						arrayDocs = arrayFromXmlStr(xmlDocs, 'document')
 					} else if (requiredXml[reqXml] == 'People') {
 						loadedXml['people'] = removeLineBreaksFromXmlStr(peopleXml)
+						xmlPeople = parser.parseFromString(loadedXml['people'],"text/xml");
+						arrayPeople = arrayFromXmlStr(xmlPeople, 'person')
 					} else if (requiredXml[reqXml] == 'Places') {
 						loadedXml['places'] = removeLineBreaksFromXmlStr(placesXml)
+						xmlPlaces = parser.parseFromString(loadedXml['places'],"text/xml");
+						arrayPlaces = arrayFromXmlStr(xmlDocs, 'place')
 					}
 				}
-
-				parser = new DOMParser();
-
-				var xmlPlaces = parser.parseFromString(loadedXml['places'],"text/xml");
-				var arrProvincePlaces = nodeValuesByTagFromCollection(xmlPlaces.getElementsByTagName("province"))
-				var groupedByProvPlaces = uniqueValFromArray(arrProvincePlaces)
-
-				var xmlDocs = parser.parseFromString(loadedXml['documents'],"text/xml");
-				var arrayDocs = arrayFromXmlStr(xmlDocs, 'document')
-				var docsMatchPosArr = []
-				for (var provIt = 0; provIt < groupedByProvPlaces.length; provIt++) {
-					let potentialMatch = childNodesFromCollection(xmlDocs.getElementsByTagName("province"),groupedByProvPlaces[provIt]);
-					if (potentialMatch.length > 0) {
-						docsMatchPosArr.push(potentialMatch)
-					}
-				}
-				var flattenPotentialMatches = docsMatchPosArr.join().split(',')
-				flattenPotentialMatches = flattenPotentialMatches.map(function (x) {
-				  return parseInt(x, 10);
-				});
-				var docsMatchingProvinceName = valuesFromArrayXmlByPosArray(arrayDocs, flattenPotentialMatches)
 
 				if (filter == 'Filter1') {
+
+					var arrProvincePlaces = nodeValuesByTagFromCollection(xmlPlaces.getElementsByTagName("province"))
+					var groupedByProvPlaces = uniqueValFromArray(arrProvincePlaces)
+
+					var docsMatchPosArr = []
+					for (var provIt = 0; provIt < groupedByProvPlaces.length; provIt++) {
+						let potentialMatch = childNodesFromCollection(xmlDocs.getElementsByTagName("province"),groupedByProvPlaces[provIt]);
+						if (potentialMatch.length > 0) {
+							docsMatchPosArr.push(potentialMatch)
+						}
+					}
+					var flattenPotentialMatches = docsMatchPosArr.join().split(',')
+					flattenPotentialMatches = flattenPotentialMatches.map(function (x) {
+						return parseInt(x, 10);
+					});
+
+					var docsMatchingProvinceName = valuesFromArrayXmlByPosArray(arrayDocs, flattenPotentialMatches)
 					document.getElementById('result').innerHTML = docsMatchingProvinceName
+
 				} else if (filter == 'Filter2') {
-					// TODO
+
+					var matchesDatingNotBeforeDocs = childNodesFromCollection(xmlDocs.getElementsByTagName("datingnotbefore"),datingNotBefore, '>=');
+					var docsMatchingDatingDocs1 = valuesFromArrayXmlByPosArray(arrayDocs, matchesDatingNotBeforeDocs)
+					var matchesDatingNotAfterDocs = childNodesFromCollection(xmlDocs.getElementsByTagName("datingnotafter"),datingNotAfter, '<=');
+					var docsMatchingDatingDocs2 = valuesFromArrayXmlByPosArray(arrayDocs, matchesDatingNotBeforeDocs)
+
+					var concatArrDocs = uniqueValFromArray(docsMatchingDatingDocs1.concat(docsMatchingDatingDocs2))
+					var matchConcatArrDocs = []
+					for (var arrDocsIt = 0; arrDocsIt < concatArrDocs.length; arrDocsIt++) {
+						let tmp1NotBef = concatArrDocs[arrDocsIt].split('<datingnotbefore>')[1]
+						let tmp2NotBef = tmp1NotBef.split('</datingnotbefore>')[0]
+						let dateNotBef = tmp2NotBef
+
+						let tmp1NotAft = concatArrDocs[arrDocsIt].split('<datingnotafter>')[1]
+						let tmp2NotAft = tmp1NotAft.split('</datingnotafter>')[0]
+						let dateNotAft = tmp2NotAft
+						if (dateNotBef >= datingNotBefore && dateNotAft <= datingNotAfter) {
+							matchConcatArrDocs.push(concatArrDocs[arrDocsIt])
+						}
+					}
+
+					var matchesDatingNotBeforePeople = childNodesFromCollection(xmlPeople.getElementsByTagName("datingnotbefore"),datingNotBefore, '>=');
+					var peopleMatchingDatingPeople1 = valuesFromArrayXmlByPosArray(arrayPeople, matchesDatingNotBeforePeople)
+					var matchesDatingNotAfterPeople = childNodesFromCollection(xmlPeople.getElementsByTagName("datingnotafter"),datingNotAfter, '<=');
+					var peopleMatchingDatingPeople2 = valuesFromArrayXmlByPosArray(arrayPeople, matchesDatingNotAfterPeople)
+
+					var concatArrPeople = uniqueValFromArray(peopleMatchingDatingPeople1.concat(peopleMatchingDatingPeople2))
+					var matchConcatArrPeople = []
+					for (var arrPeopleIt = 0; arrPeopleIt < concatArrPeople.length; arrPeopleIt++) {
+						let tmp1NotBef = concatArrPeople[arrPeopleIt].split('<datingnotbefore>')[1]
+						let tmp2NotBef = tmp1NotBef.split('</datingnotbefore>')[0]
+						let dateNotBef = tmp2NotBef
+
+						let tmp1NotAft = concatArrPeople[arrPeopleIt].split('<datingnotafter>')[1]
+						let tmp2NotAft = tmp1NotAft.split('</datingnotafter>')[0]
+						let dateNotAft = tmp2NotAft
+						if (dateNotBef >= datingNotBefore && dateNotAft <= datingNotAfter) {
+							matchConcatArrPeople.push(concatArrPeople[arrPeopleIt])
+						}
+					}
+
+					var docsAndPeopleMatchingRangeOfDates = uniqueValFromArray(matchConcatArrDocs.concat(matchConcatArrPeople))
+					document.getElementById('result').innerHTML = docsAndPeopleMatchingRangeOfDates
+
 				} else if (filter == 'Filter3') {
+
 					// TODO
+					document.getElementById('result').innerHTML = ''
+					
 				}
 			}
 
@@ -350,14 +401,27 @@
 				return string.replaceAll(/(\r\n|\n|\r)/gm, '').replaceAll('\t','')
 			}
 
-			function childNodesFromCollection(collection, matchCondition = undefined) {
+			function childNodesFromCollection(collection, matchCondition = undefined, comparisonOperator = undefined) {
 				arrayColl = []
 				for (var childPos = 0; childPos < collection.length; childPos++) {
 					var tmpChild = collection[childPos]
 					var tmpChildVal = tmpChild.childNodes[0].nodeValue
 					if (matchCondition !== undefined) {
-						if (tmpChildVal == matchCondition) {
-							arrayColl.push(childPos)
+						if (comparisonOperator == undefined) {
+							if (tmpChildVal == matchCondition) {
+								arrayColl.push(childPos)
+							}
+						} else {
+							var operator = ''
+							if (comparisonOperator == '>=') {
+								if (tmpChildVal >= matchCondition) {
+									arrayColl.push(childPos)
+								}
+							} if (comparisonOperator == '<=') {
+								if (tmpChildVal <= matchCondition) {
+									arrayColl.push(childPos)
+								}
+							}
 						}
 					} else {
 						arrayColl.push(childPos)
