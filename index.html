@@ -10,7 +10,7 @@
 		<div id="titleTable">Tableau affiché : "Documents"</div>
 		<div id="table" class="table-wrapper"></div>
 	  </br></br>Choisir un filtre en cliquant sur les boutons ci-dessous : </br></br>
-		<button onclick="filterXml('Filter1')">Tous les "DOCUMENTS" qui ont un nom de "province" commun parmi tous les lieux ("PLACES")</button></li></br></br>
+		<button onclick="filterXml('Filter1')">Tous les "DOCUMENTS" qui ont un nom de "province" commun parmi l'ensemble des lieux ("PLACES")</button></li></br></br>
 		<button onclick="filterXml('Filter2')">Tous les "DOCUMENTS" et personnes ("PEOPLE") dont les dates (datingNotBefore, datingNotAfter) sont comprises dans la plage de valeurs modifiable ci-contre :</button></li><input id="datingNotBefore" placeholder="datingNotBefore. ex : 167"/><input id="datingNotAfter" placeholder="datingNotAfter. ex : 181"/></br></br>
 		<button onclick="filterXml('Filter3')">Toutes les personnes ("PEOPLE") dont le nom se trouve dans le titre d'un document ("DOCUMENTS") et qui viennent d'une "province" ("PLACES") spécifique modifiable ci-contre :</button></li><input id="province" placeholder="province. ex : Asia"/></br></br>
 		<div id="result">...</div></br></br>
@@ -18,7 +18,7 @@
 		<script>
 			var documentsCsvFixture =  `Header 1;Header 2;Header 3;\\rValue 1 Line 1;Value 2 Line 1;Value 3 Line 1;\\rValue 1 Line 2;Value 2 Line 2;Value 3 Line 2;`;
 
-			var documentsCsv =  `id;title;uri;provenance;provenanceAltNames;provenanceUri;provenanceCoordinates;province;provinceUri;datingNotBefore;datingNotAfter\\rapcd1;Sarcophagus of the imperial freedman M. Aur. Victorinus ;https://patrimonium.huma-num.fr/documents/apcd1;Prymnessos;Prymnessus Sülün;https://patrimonium.huma-num.fr/places/16061;[30.568578, 38.696915];Asia;https://patrimonium.huma-num.fr/places/2275;176;225
+			var documentsCsv =  `id;title;uri;provenance;provenanceAltNames;provenanceUri;provenanceCoordinates;province;provinceUri;datingNotBefore;datingNotAfter\\rapcd1;Sarcophagus of the imperial freedman M. Aur. Victorinus ;https://patrimonium.huma-num.fr/documents/apcd1;Prymnessos;Prymnessus Sülün;https://patrimonium.huma-num.fr/places/16061;[30.568578, 38.696915];Etruria;https://patrimonium.huma-num.fr/places/2275;176;225
 			\\rapcd2;Altar for Apollo dedicated by the imperial slave Eutyches ;https://patrimonium.huma-num.fr/documents/apcd2;Malos;Μάλος - δῆμος Μαληνῶν   Gökçeyayla, formerly Orhaniye or Kilise;https://patrimonium.huma-num.fr/places/52644;[30.7667, 39.0883];Asia;https://patrimonium.huma-num.fr/places/2275;161;268
 			\\rapcd3;Regulations concerning a temple in Arhilloi Ateimeitos;https://patrimonium.huma-num.fr/documents/apcd3;Asartepe;Περίκομμα? Τμῶλος  Asartepe, north of Urganlı;https://patrimonium.huma-num.fr/places/43326;[27.844933, 38.555483];Asia;https://patrimonium.huma-num.fr/places/2275;101;300
 			\\rapcd4;Funerary stele for the foster parents of the imperial slave Ateimetos ;https://patrimonium.huma-num.fr/documents/apcd4;Kışla;Kışla;https://patrimonium.huma-num.fr/places/34334;[29.1958, 38.4722];Asia;https://patrimonium.huma-num.fr/places/2275;201;300
@@ -48,65 +48,35 @@
 			   <document>
 			      <id>apcd1</id>
 			      <title>Sarcophagus of the imperial freedman M. Aur. Victorinus</title>
-			      <uri>https://patrimonium.huma-num.fr/documents/apcd1</uri>
-			      <provenance>Prymnessos</provenance>
-			      <provenancealtnames>Prymnessus Sülün</provenancealtnames>
-			      <provenanceuri>https://patrimonium.huma-num.fr/places/16061</provenanceuri>
-			      <provenancecoordinates>[30.568578, 38.696915]</provenancecoordinates>
-			      <province>ddd)</province>
-			      <provinceuri>https://patrimonium.huma-num.fr/places/2275</provinceuri>
+			      <province>Etruria</province>
 			      <datingnotbefore>176</datingnotbefore>
 			      <datingnotafter>225</datingnotafter>
 			   </document>
 			   <document>
 			      <id>apcd2</id>
 			      <title>Altar for Apollo dedicated by the imperial slave Eutyches</title>
-			      <uri>https://patrimonium.huma-num.fr/documents/apcd2</uri>
-			      <provenance>Malos</provenance>
-			      <provenancealtnames>Μάλος - δῆμος Μαληνῶν   Gökçeyayla, formerly Orhaniye or Kilise</provenancealtnames>
-			      <provenanceuri>https://patrimonium.huma-num.fr/places/52644</provenanceuri>
-			      <provenancecoordinates>[30.7667, 39.0883]</provenancecoordinates>
 			      <province>Asia</province>
-			      <provinceuri>https://patrimonium.huma-num.fr/places/2275</provinceuri>
 			      <datingnotbefore>161</datingnotbefore>
 			      <datingnotafter>268</datingnotafter>
 			   </document>
 			   <document>
 			      <id>apcd3</id>
 			      <title>Regulations concerning a temple in Arhilloi Ateimetos</title>
-			      <uri>https://patrimonium.huma-num.fr/documents/apcd3</uri>
-			      <provenance>Asartepe</provenance>
-			      <provenancealtnames>Περίκομμα? Τμῶλος  Asartepe, north of Urganlı</provenancealtnames>
-			      <provenanceuri>https://patrimonium.huma-num.fr/places/43326</provenanceuri>
-			      <provenancecoordinates>[27.844933, 38.555483]</provenancecoordinates>
 			      <province>Asia</province>
-			      <provinceuri>https://patrimonium.huma-num.fr/places/2275</provinceuri>
 			      <datingnotbefore>101</datingnotbefore>
 			      <datingnotafter>300</datingnotafter>
 			   </document>
 			   <document>
 			      <id>apcd4</id>
 			      <title>Funerary stele for the foster parents of the imperial slave Ateimetos</title>
-			      <uri>https://patrimonium.huma-num.fr/documents/apcd4</uri>
-			      <provenance>Kışla</provenance>
-			      <provenancealtnames>Kışla</provenancealtnames>
-			      <provenanceuri>https://patrimonium.huma-num.fr/places/34334</provenanceuri>
-			      <provenancecoordinates>[29.1958, 38.4722]</provenancecoordinates>
 			      <province>Asia</province>
-			      <provinceuri>https://patrimonium.huma-num.fr/places/2275</provinceuri>
 			      <datingnotbefore>201</datingnotbefore>
 			      <datingnotafter>300</datingnotafter>
 			   </document>
 			   <document>
 			      <id>apcd5</id>
 			      <title>Rescript of Septimius Severus and Caracalla to the coloni of Tymium</title>
-			      <uri>https://patrimonium.huma-num.fr/documents/apcd5</uri>
-			      <provenance>Saraycik</provenance>
-			      <provenancealtnames>area locally known as Saraycik, near Susuzören</provenancealtnames>
-			      <provenanceuri>https://patrimonium.huma-num.fr/places/52671</provenanceuri>
-			      <provenancecoordinates>[29.46145967, 38.51617643]</provenancecoordinates>
 			      <province>Latium et Campania (Regio I)</province>
-			      <provinceuri>https://patrimonium.huma-num.fr/places/2275</provinceuri>
 			      <datingnotbefore>167</datingnotbefore>
 			      <datingnotafter>168</datingnotafter>
 			   </document>
